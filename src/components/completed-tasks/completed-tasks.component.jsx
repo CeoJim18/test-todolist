@@ -17,7 +17,7 @@ render(){
   return(
     <Fragment>
     <div>
-    <ul>
+    <ul style={{listStyle:"none"}}>
     {this.state.CompletedTasks.map((taskObject,index) =>(
          <li key={index}>{taskObject.task}</li>
     ))

@@ -8,81 +8,87 @@ class TodoContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTask: "",
+      
       taskList: [],
-      completedTasks: [],
+      addingTask:false,
+      
       showCompletedTasks: false,
     };
     this.handleChange = this.handleChange.bind(this);
 
     this.addTask = this.addTask.bind(this);
 
-    this.addCompletedTasks = this.addCompletedTasks.bind(this);
 
-    this.switchView = this.switchView.bind(this);
+    this.switchTasksList = this.switchTasksList.bind(this);
   }
 
   handleChange = (e) => {
     const { value } = e.target;
 
     this.setState({ currentTask: value });
+    //TODO bovenste method proberen weg te werken, omdat het ervoor zorgt dat er bij elke keyboard klik in de input field alles rendered 
+
   };
 
-  addCompletedTasks = (aCompletedTask) => {
-    const { completedTasks } = this.state;
-    this.setState({ completedTasks: [...completedTasks, aCompletedTask] });
-  };
-
-  removeFromCompletedList = (aTask) => {
-    const { completedTasks } = this.state;
-    completedTasks.includes(aTask)
-      ? this.setState({ completedTasks: completedTasks.pop(aTask) })
-      : this.setState({ completedTasks: completedTasks });
-  };
-
-  addTask() {
+  
+  //to add a task to the list containing all tasks
+  addTask=(event)=> {
     const { taskList } = this.state;
-    if (this.state.currentTask.length === 0) {
+    event.preventDefault();
+    const taskValue=event.target[0].value;
+
+
+    if (taskValue.length === 0) {
       console.log("TASK CANNOT BE EMPTY");
     } else {
-      this.setState({ taskList: [...taskList, {task:this.state.currentTask,completed:false}] });
+      this.setState({ taskList: [...taskList, {task:taskValue,completed:false}] });
+      event.target[0].value='';
     }
+
+
+    //
+   
+    //this.setState({addingTask:true})
+   
   }
 
-  switchView = () => {
+  //To switch between the 1. list containing all tasks and 2. the list containing only completed tasks 
+  switchTasksList = () => {
     const { showCompletedTasks } = this.state;
     this.setState({ showCompletedTasks: !showCompletedTasks });
   };
 
+  //to change the completed property in an element of the taskList. This element is specified with its index.
   changeCompletedState=(someIndex)=>{
     const {taskList}=this.state;
-    const falseList=taskList;
-    falseList[someIndex].completed=!falseList[someIndex].completed
-    this.setState({taskList:falseList})
+    const cacheList=taskList;
+    cacheList[someIndex].completed=!cacheList[someIndex].completed
+    this.setState({taskList:cacheList})
   }
   render() {
     return (
       <Fragment>
         <div className="todo-app-container">
           Todo List
+          <form onSubmit={this.addTask}>
           <input
             onChange={this.handleChange}
             style={{ height: "20px", width: "300px" }}
           />
-          <button
-            onClick={this.addTask}
+          <input
+            type='submit'
             style={{ height: "20px", width: "50px" }}
-          ></button>
+          />
+          </form>
           <button
-            onClick={this.switchView}
+            onClick={this.switchTasksList}
             style={{ height: "20px", width: "50px" }}
           ></button>
           {this.state.showCompletedTasks ? (
             <CompletedTasks taskList={this.state.taskList} />
           ) : (
             <TotalTasks
-              addCompletedTasks={this.addCompletedTasks}
-              removeFromCompletedList={this.removeFromCompletedList}
+            
               allTasks={this.state.taskList}
               changeCompletedState={this.changeCompletedState}
             />

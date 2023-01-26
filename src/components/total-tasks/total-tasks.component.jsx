@@ -21,7 +21,7 @@ class TotalTasks extends React.Component {
           
         {
           return(
-          <IndividualTask addCompletedTasks={this.props.addCompletedTasks} changeCompletedState={this.props.changeCompletedState} removeFromCompletedList={this.props.removeFromCompletedList} completed={taskobject.completed} task={taskobject.task} unKey={index}/>
+          <IndividualTask addCompletedTasks={this.props.addCompletedTasks} changeCompletedState={this.props.changeCompletedState} removeFromCompletedList={this.props.removeFromCompletedList} completed={taskobject.completed} task={taskobject.task} elementIndex={index}/>
          )
         })
         }

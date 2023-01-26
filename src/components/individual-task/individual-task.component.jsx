@@ -16,12 +16,8 @@ class IndividualTask extends React.Component{
   
     const { checked } = e.target;
     this.setState({taskChecked:checked});
-    this.props.changeCompletedState(this.props.unKey)
-    if(checked===true){
-
-  this.props.addCompletedTasks(this.props.task)
+    this.props.changeCompletedState(this.props.elementIndex)
   
-    }
   
     
   };
@@ -31,7 +27,7 @@ render(){
   <Fragment>
   <div className='individual-task-container'>
   <input type="checkbox" onChange={this.handleChange}  checked={this.props.completed?true:false} />
-  <li className={`task ${this.props.completed?'checked':''}`}  key={this.props.unKey}>{this.props.task}</li>
+  <li className={`task ${this.props.completed?'checked':''}`}  key={this.props.elementIndex}>{this.props.task}</li>
   </div>
   </Fragment>)
 }
