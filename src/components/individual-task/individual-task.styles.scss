@@ -1,0 +1,12 @@
+
+.individual-task-container{
+  display: flex;
+  flex-direction: row;
+
+.task{
+  &.checked{
+    text-decoration: line-through;
+  }
+}
+
+}
